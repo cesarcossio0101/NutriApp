@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<NutriApp.Web.Models.Food>
+
+@{
     ViewData["Title"] = "Gestión de alimentos"; 
 }
 
@@ -11,7 +13,9 @@
 
     <h2>Registrar alimento</h2>
 
-    <form>
+    <form asp-controller="Foods" asp-action="Create" method="post">
+        <input type="hidden" name="Id" value="0" />
+
         <div class="mb-3"> 
             <label for="name" class="form-label">Nombre del alimento</label>
             <input type="text"
@@ -47,4 +51,33 @@
             Registrar alimento
         </button>
     </form>
+    
+    <hr class="mt-5" />
+
+    @if (!Model.Any())
+    {
+        <p>Aun no hay alimentos registrados.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Calorias por 100 g</th>
+                    <th>Proteinas por 100 g</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var food in Model)
+                {
+                  <tr>
+                      <td>@food.Name</td>
+                      <td>@food.Calories</td>
+                      <td>@food.Proteins</td>
+                  </tr>  
+                }
+            </tbody>
+        </table>
+    }
 </div>
